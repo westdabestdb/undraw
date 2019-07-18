@@ -1,5 +1,5 @@
 name: undraw
-description: A new Flutter package for open source illustrations.
+description: A new Flutter package for open source illustrations. These illustrations are designed by Katerina Limpitsouni and the application is developed by westdabestdb.
 version: 1.0.0
 author: westdabestdb <westdabestdb@gmail.com>
 homepage: https://github.com/westdabestdb/undraw
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.11.0
+  flutter_svg: any
   http: ^0.12.0+2
 
 dev_dependencies:
