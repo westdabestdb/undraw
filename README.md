@@ -2,6 +2,8 @@
 
 UnDraw is a Flutter widget designed by [cubertodesign](https://www.instagram.com/cubertodesign/) and developed by [westdabestdb](https://www.instagram.com/westdabestdb/).
 
+![](https://media.giphy.com/media/McbSU6ijIr4LGjAdGt/giphy.gif)
+
 ## Getting Started
 Add this to your package's `pubspec.yaml` file:
 ```
