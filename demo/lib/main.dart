@@ -27,14 +27,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   Color color = Colors.red;
   UnDrawIllustration illustration = UnDrawIllustration.mobile_application;
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
