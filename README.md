@@ -1,9 +1,18 @@
-# undraw
+# undraw/UnDraw
 
-A new Flutter package.
+UnDraw is a Flutter widget designed by [cubertodesign](https://www.instagram.com/cubertodesign/) and developed by [westdabestdb](https://www.instagram.com/westdabestdb/).
 
 ## Getting Started
-
+Add this to your package's `pubspec.yaml` file:
+```
+...
+dependencies:
+  undraw: ^1.0.0
+```
+Now in your Dart code, you can use:
+```
+import 'package:undraw/undraw.dart';
+```
 This project is a starting point for a Dart
 [package](https://flutter.dev/developing-packages/),
 a library module containing code that can be shared easily across
