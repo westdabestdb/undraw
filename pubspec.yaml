@@ -1,8 +1,8 @@
 name: undraw
-description: A new Flutter package.
-version: 0.0.1
-author:
-homepage:
+description: A new Flutter package for open source illustrations.
+version: 1.0.0
+author: westdabestdb <westdabestdb@gmail.com>
+homepage: https://github.com/westdabestdb/undraw
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

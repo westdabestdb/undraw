@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   color = Color(
-                      (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
                       .withOpacity(1.0);
                 });
               },
@@ -63,7 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Random random = new Random();
                 setState(() {
-                  illustration = UnDrawIllustration.values[random.nextInt(UnDrawIllustration.values.length)];
+                  illustration = UnDrawIllustration
+                      .values[random.nextInt(UnDrawIllustration.values.length)];
                 });
               },
               backgroundColor: Colors.red,
