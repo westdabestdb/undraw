@@ -4,23 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:undraw/illustrations.dart';
+
 export 'package:undraw/illustrations.dart';
 
 class UnDraw extends StatelessWidget {
-  UnDraw(
-      {Key key,
-      @required this.illustration,
-      @required this.color,
-      this.semanticLabel,
-      this.alignment = Alignment.center,
-      this.fit = BoxFit.contain,
-      this.colorBlendMode,
-      this.height,
-      this.width,
-      this.placeholder,
-      this.padding})
-      : assert(illustration != null),
+  UnDraw({
+    Key key,
+    @required this.illustration,
+    @required this.color,
+    this.semanticLabel,
+    this.alignment = Alignment.center,
+    this.fit = BoxFit.contain,
+    this.colorBlendMode,
+    this.height,
+    this.width,
+    this.placeholder,
+    this.errorWidget,
+    this.padding,
+  })  : assert(illustration != null),
         assert(color != null);
+
   final UnDrawIllustration illustration;
   final Color color;
   final String semanticLabel;
@@ -30,6 +33,7 @@ class UnDraw extends StatelessWidget {
   final double height;
   final double width;
   final Widget placeholder;
+  final Widget errorWidget;
   final EdgeInsets padding;
 
   Future<String> getSvgString(url) async {
@@ -61,20 +65,25 @@ class UnDraw extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FutureBuilder(
-      future: renderIllustration(illustration.toString(), color),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          return Container(
-            padding: padding ?? EdgeInsets.all(16),
-            child: snapshot.data,
-          );
-        } else {
-          return Center(
-            child: placeholder ?? CircularProgressIndicator(),
-          );
-        }
-      },
-    ));
+      child: FutureBuilder(
+        future: renderIllustration(illustration.toString(), color),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              padding: padding ?? EdgeInsets.all(16),
+              child: snapshot.data,
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: errorWidget ?? Text('Could not load illustration!'),
+            );
+          } else {
+            return Center(
+              child: placeholder ?? CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
   }
 }

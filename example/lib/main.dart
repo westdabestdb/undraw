@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:undraw/undraw.dart';
 
 void main() => runApp(MyApp());
@@ -43,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
         color: color,
         illustration: illustration,
         placeholder: Text("Illustration is loading..."),
+        errorWidget: Icon(Icons.error_outline, color: Colors.red, size: 50),
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 36, left: 16, right: 16),
@@ -53,8 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Icon(Icons.color_lens),
               onPressed: () {
                 setState(() {
-                  color = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                  color = Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0)
                       .withOpacity(1.0);
                 });
               },
