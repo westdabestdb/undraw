@@ -36,17 +36,12 @@ class UnDraw extends StatelessWidget {
   final Widget errorWidget;
   final EdgeInsets padding;
 
-  Future<String> getSvgString(url) async {
-    http.Response response = await http.get(url);
-    return response.body;
-  }
-
   Future<SvgPicture> renderIllustration(String name, Color _exColor) async {
     var nameSplit = name.toString().split("UnDrawIllustration.");
     var illustration =
         illustrationList.where((i) => i["identifier"] == nameSplit[1]);
     String url = illustration.toList()[0]["url"];
-    String image = await getSvgString(url);
+    String image = await _getSvgString(url);
 
     String valueString = color.toString().split('(0x')[1].split(')')[0];
     valueString = valueString.substring(2, valueString.length);
@@ -85,5 +80,10 @@ class UnDraw extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<String> _getSvgString(url) async {
+    http.Response response = await http.get(url);
+    return response.body;
   }
 }
