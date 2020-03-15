@@ -29,7 +29,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Color color = Colors.red;
-  UnDrawIllustration illustration = UnDrawIllustration.mobile_application;
+  String illustration = '3d_modeling';
+  String mode = 'offline';
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: UnDraw(
         color: color,
         illustration: illustration,
+        mode: mode,
         placeholder: Text("Illustration is loading..."),
         errorWidget: Icon(Icons.error_outline, color: Colors.red, size: 50),
       ),
@@ -64,8 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Random random = new Random();
                 setState(() {
+                  mode = 'online';
                   illustration = UnDrawIllustration
-                      .values[random.nextInt(UnDrawIllustration.values.length)];
+                      .values[random.nextInt(UnDrawIllustration.values.length)]
+                      .toString()
+                      .split('UnDrawIllustration.')[1];
                 });
               },
               backgroundColor: Colors.red,
