@@ -1,6 +1,7 @@
 library undraw;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:undraw/illustrations.dart';
@@ -12,6 +13,7 @@ class UnDraw extends StatelessWidget {
     Key key,
     @required this.illustration,
     @required this.color,
+    this.mode,
     this.semanticLabel,
     this.alignment = Alignment.center,
     this.fit = BoxFit.contain,
@@ -24,8 +26,9 @@ class UnDraw extends StatelessWidget {
   })  : assert(illustration != null),
         assert(color != null);
 
-  final UnDrawIllustration illustration;
+  final String illustration;
   final Color color;
+  final String mode;
   final String semanticLabel;
   final AlignmentGeometry alignment;
   final BoxFit fit;
@@ -37,11 +40,23 @@ class UnDraw extends StatelessWidget {
   final EdgeInsets padding;
 
   Future<SvgPicture> renderIllustration(String name, Color _exColor) async {
-    var nameSplit = name.toString().split("UnDrawIllustration.");
-    var illustration =
-        illustrationList.where((i) => i["identifier"] == nameSplit[1]);
-    String url = illustration.toList()[0]["url"];
-    String image = await _getSvgString(url);
+    String image;
+    String url;
+    if (this.mode == 'offline') {
+      image = await rootBundle.loadString('assets/$name');
+    } else {
+      if (name.toString().contains('UnDrawIllustration.')) {
+        var nameSplit = name.toString().split("UnDrawIllustration.");
+        var illustration =
+            illustrationList.where((i) => i["identifier"] == nameSplit[1]);
+        url = illustration.toList()[0]["url"];
+      } else {
+        var illustration =
+            illustrationList.where((i) => i["identifier"] == name);
+        url = illustration.toList()[0]["url"];
+      }
+      image = await _getSvgFromUrl(url);
+    }
 
     String valueString = color.toString().split('(0x')[1].split(')')[0];
     valueString = valueString.substring(2, valueString.length);
@@ -61,7 +76,7 @@ class UnDraw extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: FutureBuilder(
-        future: renderIllustration(illustration.toString(), color),
+        future: renderIllustration(illustration, color),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return Container(
@@ -82,7 +97,7 @@ class UnDraw extends StatelessWidget {
     );
   }
 
-  Future<String> _getSvgString(url) async {
+  Future<String> _getSvgFromUrl(url) async {
     http.Response response = await http.get(url);
     return response.body;
   }
