@@ -43,7 +43,7 @@ class UnDraw extends StatelessWidget {
     String image;
     String url;
     if (this.mode == 'offline') {
-      image = await rootBundle.loadString('assets/$name');
+      image = await rootBundle.loadString('assets/$name.svg');
     } else {
       if (name.toString().contains('UnDrawIllustration.')) {
         var nameSplit = name.toString().split("UnDrawIllustration.");
