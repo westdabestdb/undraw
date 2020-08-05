@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:undraw/undraw.dart';
+import 'package:ms_undraw/ms_undraw.dart';
 
 void main() => runApp(MyApp());
 

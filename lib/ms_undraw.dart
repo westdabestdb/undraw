@@ -1,11 +1,11 @@
-library undraw;
+library ms_undraw;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:undraw/illustrations.dart';
+import 'package:ms_undraw/illustrations.g.dart';
 
-export 'package:undraw/illustrations.dart';
+export 'package:ms_undraw/illustrations.g.dart';
 
 class UnDraw extends StatelessWidget {
   UnDraw({
