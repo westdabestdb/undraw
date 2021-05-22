@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: UnDraw(
         color: color,
         illustration: illustration,
-        placeholder: Text("Illustration is loading..."),
+        placeholder: Text('Illustration is loading...'),
         errorWidget: Icon(Icons.error_outline, color: Colors.red, size: 50),
       ),
       bottomNavigationBar: Padding(
@@ -50,7 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-              child: Icon(Icons.color_lens),
               onPressed: () {
                 setState(() {
                   color = Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0)
@@ -58,17 +57,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               backgroundColor: Colors.red,
+              child: const Icon(Icons.color_lens),
             ),
             FloatingActionButton(
-              child: Icon(Icons.image),
               onPressed: () {
-                Random random = new Random();
+                final random = Random();
                 setState(() {
                   illustration = UnDrawIllustration
                       .values[random.nextInt(UnDrawIllustration.values.length)];
                 });
               },
               backgroundColor: Colors.red,
+              child: const Icon(Icons.image),
             )
           ],
         ),

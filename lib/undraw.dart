@@ -9,43 +9,52 @@ export 'package:undraw/illustrations.dart';
 
 class UnDraw extends StatelessWidget {
   UnDraw({
-    Key key,
-    @required this.illustration,
-    @required this.color,
+    Key? key,
+    required this.illustration,
+    required this.color,
     this.semanticLabel,
     this.alignment = Alignment.center,
     this.fit = BoxFit.contain,
-    this.colorBlendMode,
+    this.colorBlendMode = BlendMode.srcIn,
     this.height,
     this.width,
     this.placeholder,
     this.errorWidget,
     this.padding,
-  })  : assert(illustration != null),
-        assert(color != null);
+  });
 
   final UnDrawIllustration illustration;
   final Color color;
-  final String semanticLabel;
+  final String? semanticLabel;
   final AlignmentGeometry alignment;
   final BoxFit fit;
   final BlendMode colorBlendMode;
-  final double height;
-  final double width;
-  final Widget placeholder;
-  final Widget errorWidget;
-  final EdgeInsets padding;
+  final double? height;
+  final double? width;
+  final Widget? placeholder;
+  final Widget? errorWidget;
+  final EdgeInsets? padding;
 
-  Future<SvgPicture> renderIllustration(String name, Color _exColor) async {
-    var nameSplit = name.toString().split("UnDrawIllustration.");
-    var illustration =
-        illustrationList.where((i) => i["identifier"] == nameSplit[1]);
-    String url = illustration.toList()[0]["url"];
-    String image = await _getSvgString(url);
+  String _illustrationToString(UnDrawIllustration illustration) {
+    return illustration.toString().split('.').last;
+  }
 
-    String valueString = color.toString().split('(0x')[1].split(')')[0];
-    valueString = valueString.substring(2, valueString.length);
-    image = image.replaceAll("#6c63ff", "#" + valueString);
+  Future<String> _getSvgString(url) async {
+    final response = await http.get(Uri.parse(url));
+    return response.body;
+  }
+
+  Future<SvgPicture> _renderIllustration(
+    UnDrawIllustration illustration,
+    Color color,
+  ) async {
+    final data = illustrationList.firstWhere(
+      (i) => i['identifier'] == _illustrationToString(illustration),
+    );
+
+    var image = await _getSvgString(data['url']);
+    image = image.replaceAll('#6c63ff', '#${color.value.toRadixString(16)}');
+
     return SvgPicture.string(
       image,
       height: height,
@@ -60,8 +69,8 @@ class UnDraw extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder(
-        future: renderIllustration(illustration.toString(), color),
+      child: FutureBuilder<SvgPicture>(
+        future: _renderIllustration(illustration, color),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return Container(
@@ -69,6 +78,8 @@ class UnDraw extends StatelessWidget {
               child: snapshot.data,
             );
           } else if (snapshot.hasError) {
+            print(snapshot.error);
+            print(snapshot.stackTrace);
             return Center(
               child: errorWidget ?? Text('Could not load illustration!'),
             );
@@ -80,10 +91,5 @@ class UnDraw extends StatelessWidget {
         },
       ),
     );
-  }
-
-  Future<String> _getSvgString(url) async {
-    http.Response response = await http.get(url);
-    return response.body;
   }
 }
