@@ -1,3 +1,6 @@
+## [1.1.0]
+* Null Safety migration
+* Code refactor
 ## [1.0.2]
 
 * Add errorWidget: This widget will be displayed when the future completes with an error. The default is a Text with an error message.
